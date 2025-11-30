@@ -1,15 +1,18 @@
 {
     "name": "hexlet/code",
-    "type": "project",
+    "type": "library",
     "license": "MIT",
     "autoload": {
-        "psr-4": {
-            "Hexlet\\Code\\": "src/"
-        }
+        "files": [
+            "src/Diff.php",
+            "src/Parser.php"
+        ]
     },
     "bin": ["bin/gendiff"],
     "minimum-stability": "dev",
     "require": {
-        "docopt/docopt": "dev-master"
+        "docopt/docopt": "dev-master",
+        "symfony/yaml": "8.1.x-dev",
+        "funct/funct": "^1.6"
     }
 }

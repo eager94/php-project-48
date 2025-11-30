@@ -3,13 +3,15 @@
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
+use function Differ\genDiff;
+
 $doc = <<<DOC
 Generate diff
 
 Usage:
     gendiff (-h|--help)
     gendiff (-v|--version)
-    gendiff [--fromat <fmt>] <firstFile> <secondFile>
+    gendiff [--format <fmt>] <firstFile> <secondFile>
 
 Options:
     -h --help           Show this screen
@@ -20,6 +22,13 @@ DOC;
 
 $args = Docopt::handle($doc, array('version' => 'gendiff 1.0.0'));
 
-$firstFile = $args['<firstFile>'];
-$secondFile = $args['<secondFile>'];
-$format = $args['<fmt>'];
+$firstFile = realpath($args['<firstFile>']) ?: $args['<firstFile>'];
+$secondFile = realpath($args['<secondFile>']) ?: $args['<secondFile>'];
+$format = $args['--format'];
+
+$result = genDiff(
+    $args['<firstFile>'],
+    $args['<secondFile>']
+);
+
+echo $result;
