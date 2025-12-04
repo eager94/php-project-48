@@ -3,7 +3,7 @@ name: CI
 on: push
 
 jobs:
-  checks:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -13,6 +13,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.4'
+          coverage: xdebug
 
       - name: Install dependencies
         run: composer install
@@ -20,3 +21,7 @@ jobs:
       - name: Run linter
         run: ./vendor/bin/phpcs --standard=PSR12 src/ bin/
 
+      - name: SonarQube Scan
+        uses: SonarSource/sonarqube-scan-action@v6
+        env:
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
