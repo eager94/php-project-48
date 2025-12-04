@@ -14,5 +14,8 @@
         "docopt/docopt": "dev-master",
         "symfony/yaml": "8.1.x-dev",
         "funct/funct": "^1.6"
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "4.x-dev"
     }
 }
