@@ -1,11 +1,11 @@
 <?php
+
 /** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
 
 namespace Differ;
 
 use function Funct\Collection\sortBy;
 use function Differ\Parser\parse;
-
 
 function genDiff($file1, $file2): string
 {
@@ -23,7 +23,7 @@ function buildDiff(object $data1, object $data2): array
     $allKeys = array_unique(array_merge($keys1, $keys2));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
-    return array_map(function($key) use ($data1, $data2) {
+    return array_map(function ($key) use ($data1, $data2) {
         $hasInFirst = property_exists($data1, $key);
         $hasInSecond = property_exists($data2, $key);
         $value1 = $hasInFirst ? $data1->$key : null;
@@ -51,7 +51,7 @@ function buildDiff(object $data1, object $data2): array
 }
 function formatDiff(array $diff): string
 {
-    $formatLine = function($item) {
+    $formatLine = function ($item) {
         $type = $item['type'];
         $key = $item['key'];
 
