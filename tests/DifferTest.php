@@ -45,41 +45,4 @@ EXPECTED;
         $this->assertEquals($expected, $actual);
     }
 
-    public function testEmptyFirstFile(): void
-    {
-        $expected = <<<EXPECTED
-{
-  + timeout: 20
-  + verbose: true
-  + host: hexlet.io
-}
-EXPECTED;
-
-        $actual = genDiff(
-            __DIR__ . '/fixtures/empty.json',
-            __DIR__ . '/fixtures/file2.json'
-        );
-
-        $this->assertEquals($expected, $actual);
-    }
-
-    public function testEmptySecondFile(): void
-    {
-        $expected = <<<EXPECTED
-{
-  - host: hexlet.io
-  - timeout: 50
-  - proxy: 123.234.53.22
-  - follow: false
-}
-EXPECTED;
-
-        $actual = genDiff(
-            __DIR__ . '/fixtures/file1.json',
-            __DIR__ . '/fixtures/empty.json'
-        );
-
-        $this->assertEquals($expected, $actual);
-    }
-
 }

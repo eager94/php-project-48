@@ -29,4 +29,4 @@ jobs:
             args: >
                 -Dsonar.projectKey=eager94_php-project-48
                 -Dsonar.organization=eager94
-               
+                -Dsonar.php.coverage.reportPaths=coverage.xml
