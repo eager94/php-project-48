@@ -21,6 +21,9 @@ jobs:
       - name: Run linter
         run: ./vendor/bin/phpcs --standard=PSR12 src/ bin/
 
+      - name: Run tests
+        run: make test-coverage
+
       - name: SonarQube Scan
         uses: SonarSource/sonarqube-scan-action@v6
         env:
