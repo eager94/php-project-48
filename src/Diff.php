@@ -56,10 +56,12 @@ function formatDiff(array $diff): string
         $key = $item['key'];
 
         $formatters = [
-            'added' => fn($item) => "  + {$key}: {$item['value']}",
-            'removed' => fn($item) => "  - {$key}: {$item['value']}",
-            'unchanged' => fn($item) => "    {$key}: {$item['value']}",
-            'changed' => fn($item) => "  - {$key}: {$item['oldValue']}\n  + {$key}: {$item['newValue']}"
+            'added' => fn($item) => "  + {$key}: " . formatValue($item['value']),
+            'removed' => fn($item) => "  - {$key}: " . formatValue($item['value']),
+            'unchanged' => fn($item) => "    {$key}: " . formatValue($item['value']),
+            'changed' => fn($item) =>
+                "  - {$key}: " . formatValue($item['oldValue']) . "\n" .
+                "  + {$key}: " . formatValue($item['newValue'])
         ];
 
         return $formatters[$type]($item);
@@ -67,4 +69,15 @@ function formatDiff(array $diff): string
 
     $lines = array_map($formatLine, $diff);
     return "{\n" . implode("\n", $lines) . "\n}";
+}
+
+function formatValue($value): string
+{
+    if (is_bool($value)) {
+        return $value ? 'true' : 'false';
+    }
+    if (is_null($value)) {
+        return 'null';
+    }
+    return $value;
 }
