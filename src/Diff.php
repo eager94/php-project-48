@@ -1,19 +1,18 @@
 <?php
 
-/** @noinspection PhpUnnecessaryCurlyVarSyntaxInspection */
-
 namespace Differ;
 
 use function Funct\Collection\sortBy;
 use function Differ\Parser\parse;
+use function Differ\FormatFactory\format;
 
-function genDiff($file1, $file2): string
+function genDiff($file1, $file2, string $format = 'stylish'): string
 {
-    $data1 = Parser\parse($file1);
-    $data2 = Parser\parse($file2);
+    $data1 = parse($file1);
+    $data2 = parse($file2);
 
-    $diff = buildDiff($data1, $data2);
-    return formatDiff($diff);
+    $ast = buildDiff($data1, $data2);
+    return format($ast, $format);
 }
 
 function buildDiff(object $data1, object $data2): array
@@ -23,12 +22,22 @@ function buildDiff(object $data1, object $data2): array
     $allKeys = array_unique(array_merge($keys1, $keys2));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
-    return array_map(function ($key) use ($data1, $data2) {
+    return array_map(function($key) use ($data1, $data2) {
         $hasInFirst = property_exists($data1, $key);
         $hasInSecond = property_exists($data2, $key);
         $value1 = $hasInFirst ? $data1->$key : null;
         $value2 = $hasInSecond ? $data2->$key : null;
 
+        // Если оба значения - объекты, рекурсивно сравниваем
+        if ($hasInFirst && $hasInSecond && is_object($value1) && is_object($value2)) {
+            return [
+                'key' => $key,
+                'type' => 'nested',
+                'children' => buildDiff($value1, $value2)  // ← РЕКУРСИЯ
+            ];
+        }
+
+        // Логика для простых значений
         if (!$hasInSecond) {
             return ['key' => $key, 'type' => 'removed', 'value' => $value1];
         }
@@ -48,36 +57,4 @@ function buildDiff(object $data1, object $data2): array
             'newValue' => $value2
         ];
     }, $sortedKeys);
-}
-function formatDiff(array $diff): string
-{
-    $formatLine = function ($item) {
-        $type = $item['type'];
-        $key = $item['key'];
-
-        $formatters = [
-            'added' => fn($item) => "  + {$key}: " . formatValue($item['value']),
-            'removed' => fn($item) => "  - {$key}: " . formatValue($item['value']),
-            'unchanged' => fn($item) => "    {$key}: " . formatValue($item['value']),
-            'changed' => fn($item) =>
-                "  - {$key}: " . formatValue($item['oldValue']) . "\n" .
-                "  + {$key}: " . formatValue($item['newValue'])
-        ];
-
-        return $formatters[$type]($item);
-    };
-
-    $lines = array_map($formatLine, $diff);
-    return "{\n" . implode("\n", $lines) . "\n}";
-}
-
-function formatValue($value): string
-{
-    if (is_bool($value)) {
-        return $value ? 'true' : 'false';
-    }
-    if (is_null($value)) {
-        return 'null';
-    }
-    return $value;
 }

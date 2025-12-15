@@ -5,7 +5,10 @@
     "autoload": {
         "files": [
             "src/Diff.php",
-            "src/Parser.php"
+            "src/Parser.php",
+            "src/FormatFactory.php",
+            "src/Formatters/Stylish.php",
+            "src/Formatters/Plain.php"
         ]
     },
     "bin": ["bin/gendiff"],
