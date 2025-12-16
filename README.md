@@ -11,6 +11,13 @@
 **Описание**
 
 Утилита командной строки для вычисления отличий между JSON, YAML файлами
+Поддерживает расширения .json, .yaml, .yml.
+В качестве аргументов принимает путь к файлам и формат:
+- stylish (по умолчанию),
+- plain (каждый дифф описан отдлельной строкой),
+- json.
+
+Опция `-h` показывает экран помощи, опция `-v` показывает версию.
 
 ### Установка
 
@@ -22,6 +29,7 @@ composer require eager94/php-project-48
 
 [![asciicast](https://asciinema.org/a/762360.svg)](https://asciinema.org/a/762360)
 
+[![asciicast](https://asciinema.org/a/762441.svg)](https://asciinema.org/a/762441)
 
 
 
