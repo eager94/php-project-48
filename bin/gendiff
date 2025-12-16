@@ -26,9 +26,6 @@ $firstFile = realpath($args['<firstFile>']) ?: $args['<firstFile>'];
 $secondFile = realpath($args['<secondFile>']) ?: $args['<secondFile>'];
 $format = $args['--format'];
 
-$result = genDiff(
-    $args['<firstFile>'],
-    $args['<secondFile>']
-);
+$result = genDiff($firstFile, $secondFile, $format);
 
 echo $result;

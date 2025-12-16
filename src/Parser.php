@@ -4,27 +4,22 @@ namespace Differ\Parser;
 
 use Symfony\Component\Yaml\Yaml;
 
-
 function parse(string $filePath): object
 {
-    // Проверка существования файла
     if (!file_exists($filePath)) {
         throw new \Exception("File not found: {$filePath}");
     }
 
-    // Чтение содержимого
     $content = file_get_contents($filePath);
     if ($content === false) {
         throw new \Exception("Cannot read file: {$filePath}");
     }
 
-    // Определение формата по расширению
     $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
 
     switch ($extension) {
         case 'yml':
         case 'yaml':
-            // Парсинг YAML с преобразованием ассоциативных массивов в объекты
             $data = Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
             break;
 

@@ -7,8 +7,7 @@ use function Differ\genDiff;
 
 class DifferTest extends TestCase
 {
-    // ==== ВЛОЖЕННЫЕ YAML СТРУКТУРЫ ====
-    public function testNestedYamlStylish(): void
+    public function testYamlStylish(): void
     {
         $expected = <<<EXPECTED
 {
@@ -66,7 +65,7 @@ EXPECTED;
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNestedYamlPlain(): void
+    public function testYamlPlain(): void
     {
         $expected = <<<EXPECTED
 Property 'common.follow' was added with value: false
@@ -91,8 +90,8 @@ EXPECTED;
         $this->assertEquals($expected, $actual);
     }
 
-    // ==== JSON ВЕРСИИ (такие же данные) ====
-    public function testNestedJsonStylish(): void
+
+    public function testJsonStylish(): void
     {
         $expected = <<<EXPECTED
 {
@@ -150,7 +149,7 @@ EXPECTED;
         $this->assertEquals($expected, $actual);
     }
 
-    public function testNestedJsonPlain(): void
+    public function testJsonPlain(): void
     {
         $actual = genDiff(
             __DIR__ . '/fixtures/file1.json',
@@ -164,23 +163,19 @@ EXPECTED;
         $this->assertStringContainsString("Property 'group3' was added with value: [complex value]", $actual);
     }
 
-    // ==== СМЕШАННЫЕ ФОРМАТЫ ====
     public function testMixedFormats(): void
     {
-        // YAML vs JSON с одинаковыми данными
         $actual = genDiff(
             __DIR__ . '/fixtures/file1.yml',
             __DIR__ . '/fixtures/file1.json'  // одинаковое содержание
         );
 
-        // Должен быть пустой diff (все unchanged)
         $this->assertStringNotContainsString('  +', $actual);
         $this->assertStringNotContainsString('  -', $actual);
         $this->assertStringContainsString('common: {', $actual);
         $this->assertStringContainsString('group1: {', $actual);
     }
 
-    // ==== ПРОВЕРКА ФОРМАТА ПО УМОЛЧАНИЮ ====
     public function testDefaultFormatIsStylish(): void
     {
         $actualWithoutFormat = genDiff(
@@ -197,7 +192,6 @@ EXPECTED;
         $this->assertEquals($actualWithoutFormat, $actualWithStylish);
     }
 
-    // ==== ОДИНАКОВЫЕ ФАЙЛЫ ====
     public function testIdenticalFiles(): void
     {
         $actual = genDiff(
@@ -205,7 +199,6 @@ EXPECTED;
             __DIR__ . '/fixtures/file1.yml'
         );
 
-        // Все ключи должны быть unchanged
         $this->assertStringNotContainsString('  +', $actual);
         $this->assertStringNotContainsString('  -', $actual);
         $this->assertStringContainsString('common: {', $actual);

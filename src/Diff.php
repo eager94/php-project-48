@@ -22,7 +22,7 @@ function buildDiff(object $data1, object $data2): array
     $allKeys = array_unique(array_merge($keys1, $keys2));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
-    return array_map(function($key) use ($data1, $data2) {
+    return array_map(function ($key) use ($data1, $data2) {
         $hasInFirst = property_exists($data1, $key);
         $hasInSecond = property_exists($data2, $key);
         $value1 = $hasInFirst ? $data1->$key : null;

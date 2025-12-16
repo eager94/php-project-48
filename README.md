@@ -6,8 +6,22 @@
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=eager94_php-project-48&metric=coverage)](https://sonarcloud.io/summary/new_code?id=eager94_php-project-48)
 [![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=eager94_php-project-48&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=eager94_php-project-48)
 
-# Вычилситель отличий
-Утилита командной строки для вычисления отличий между JSON, YAML файлами
----
+### Вычислитель отличий
 
-# Пример работы
+**Описание**
+
+Утилита командной строки для вычисления отличий между JSON, YAML файлами
+
+### Установка
+
+```bash
+composer require eager94/php-project-48
+```
+
+### Пример работы
+
+[![asciicast](https://asciinema.org/a/762360.svg)](https://asciinema.org/a/762360)
+
+
+
+
