@@ -22,39 +22,58 @@ function buildDiff(object $data1, object $data2): array
     $allKeys = array_unique(array_merge($keys1, $keys2));
     $sortedKeys = sortBy($allKeys, fn($key) => $key);
 
-    return array_map(function ($key) use ($data1, $data2) {
+    $result = [];
+
+    foreach ($sortedKeys as $key) {
         $hasInFirst = property_exists($data1, $key);
         $hasInSecond = property_exists($data2, $key);
         $value1 = $hasInFirst ? $data1->$key : null;
         $value2 = $hasInSecond ? $data2->$key : null;
 
-        // Если оба значения - объекты, рекурсивно сравниваем
         if ($hasInFirst && $hasInSecond && is_object($value1) && is_object($value2)) {
-            return [
+            $result[] = [
                 'key' => $key,
                 'type' => 'nested',
-                'children' => buildDiff($value1, $value2)  // ← РЕКУРСИЯ
+                'children' => buildDiff($value1, $value2)
             ];
+            continue;
         }
 
-        // Логика для простых значений
         if (!$hasInSecond) {
-            return ['key' => $key, 'type' => 'removed', 'value' => $value1];
+            $result[] = [
+                'key' => $key,
+                'type' => 'removed',
+                'value' => $value1
+            ];
+            continue;
         }
 
         if (!$hasInFirst) {
-            return ['key' => $key, 'type' => 'added', 'value' => $value2];
+            $result[] = [
+                'key' => $key,
+                'type' => 'added',
+                'value' => $value2
+            ];
+            continue;
         }
 
         if ($value1 === $value2) {
-            return ['key' => $key, 'type' => 'unchanged', 'value' => $value1];
+            $result[] = [
+                'key' => $key,
+                'type' => 'unchanged',
+                'value' => $value1
+            ];
+            continue;
         }
 
-        return [
+        // Если значения разные
+        $result[] = [
             'key' => $key,
             'type' => 'changed',
             'oldValue' => $value1,
             'newValue' => $value2
         ];
-    }, $sortedKeys);
+    }
+
+    return $result;
 }

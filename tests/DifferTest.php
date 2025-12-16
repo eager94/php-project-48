@@ -4,6 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use function Differ\genDiff;
+use function Differ\Parser\parse;
 
 class DifferTest extends TestCase
 {
@@ -203,5 +204,13 @@ EXPECTED;
         $this->assertStringNotContainsString('  -', $actual);
         $this->assertStringContainsString('common: {', $actual);
         $this->assertStringContainsString('setting1: Value 1', $actual);
+    }
+
+    public function testParseNonExistentFileThrowsException(): void
+    {
+        $this->expectException(\Exception::class);
+        $this->expectExceptionMessageMatches('/File not found/');
+
+        parse(__DIR__ . '/fixtures/non_existent.json');
     }
 }
