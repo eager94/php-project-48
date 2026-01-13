@@ -2,6 +2,12 @@
     "name": "hexlet/code",
     "type": "library",
     "license": "MIT",
+  "minimum-stability": "stable",
+  "require": {
+    "docopt/docopt": "^1.0.0",
+    "symfony/yaml": "^8.1",
+    "funct/funct": "^1.6"
+  },
     "autoload": {
         "files": [
             "src/Diff.php",
@@ -13,14 +19,8 @@
         ]
     },
     "bin": ["bin/gendiff"],
-    "minimum-stability": "stable",
-    "require": {
-        "docopt/docopt": "dev-master",
-        "symfony/yaml": "8.1.x-dev",
-        "funct/funct": "^1.6"
-    },
     "require-dev": {
-        "squizlabs/php_codesniffer": "4.x-dev",
-        "phpunit/phpunit": "^13.0@dev"
+        "squizlabs/php_codesniffer": "^4.0",
+        "phpunit/phpunit": "^13.0"
     }
 }
