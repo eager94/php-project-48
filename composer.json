@@ -5,7 +5,7 @@
   "minimum-stability": "stable",
   "require": {
     "docopt/docopt": "^1.0.0",
-    "symfony/yaml": "^8.1",
+    "symfony/yaml": "^8.0",
     "funct/funct": "^1.6"
   },
     "autoload": {
@@ -21,6 +21,6 @@
     "bin": ["bin/gendiff"],
     "require-dev": {
         "squizlabs/php_codesniffer": "^4.0",
-        "phpunit/phpunit": "^13.0"
+        "phpunit/phpunit": "^12.5.0"
     }
 }
