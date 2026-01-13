@@ -13,7 +13,7 @@
         ]
     },
     "bin": ["bin/gendiff"],
-    "minimum-stability": "dev",
+    "minimum-stability": "stable",
     "require": {
         "docopt/docopt": "dev-master",
         "symfony/yaml": "8.1.x-dev",
