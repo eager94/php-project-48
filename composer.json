@@ -4,10 +4,10 @@
     "license": "MIT",
   "minimum-stability": "stable",
   "require": {
-    "php": "^8.0",
-    "docopt/docopt": "^1.0.0",
-    "symfony/yaml": "^8.0",
-    "funct/funct": "^1.6"
+      "php": "^8.2",
+      "docopt/docopt": "^1.0.0",
+      "symfony/yaml": "^7.0",
+      "funct/funct": "^1.6"
   },
     "autoload": {
         "files": [
