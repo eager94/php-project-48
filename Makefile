@@ -2,10 +2,10 @@ install:
 	composer install
 
 lint:
-	phpcs --standard=PSR12 --extensions=php src/ bin/
+	./vendor/bin/phpcs --standard=PSR12 --extensions=php src/ bin/
 
 lint-fix:
-	phpcbf --standard=PSR12 --extensions=php src/
+	./vendor/bin/phpcbf --standard=PSR12 --extensions=php src/
 
 test:
 		./vendor/bin/phpunit --testdox tests/
